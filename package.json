@@ -30,7 +30,7 @@
     "next": "^14.2.0",
     "next-auth": "^4.24.5",
     "postcss": "^8.4.35",
-    "puppeteer": "^22.0.0",
+    "puppeteer": "^22.15.0",
     "react": "^18.3.0",
     "react-apple-emojis": "^3.0.0",
     "react-dom": "^18.3.0",

@@ -56,8 +56,12 @@ export default function ProfilePage() {
       });
 
       if (!res.ok) {
-        throw new Error('Failed to generate certificate');
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to generate certificate');
       }
+
+      // Get certificate ID from response header
+      const certificateId = res.headers.get('X-Certificate-Id');
 
       // Get the PDF blob and download it
       const blob = await res.blob();
@@ -69,9 +73,21 @@ export default function ProfilePage() {
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
+
+      // Show success message with link to share page
+      if (certificateId) {
+        const shareUrl = `${window.location.origin}/certificates/${certificateId}`;
+        const shouldShare = confirm(
+          'Certificate downloaded! Would you like to view and share it on LinkedIn?'
+        );
+        if (shouldShare) {
+          window.open(shareUrl, '_blank');
+        }
+      }
     } catch (error) {
       console.error('Error generating certificate:', error);
-      alert('Failed to generate certificate. Please try again.');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to generate certificate. Please try again.';
+      alert(`Error: ${errorMessage}`);
     } finally {
       setGenerating(false);
     }
