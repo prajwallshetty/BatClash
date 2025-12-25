@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { motion } from 'framer-motion';
 import { Emoji } from 'react-apple-emojis';
+import { Loading } from '@/components/Loading';
 
 interface Problem {
   _id: string;
@@ -127,9 +128,7 @@ export default function ProblemsPage() {
         </motion.div>
 
         {loading ? (
-          <div className="text-center py-12">
-            <p className="text-lg">Loading problems...</p>
-          </div>
+          <Loading />
         ) : (
           <motion.div
             initial="hidden"

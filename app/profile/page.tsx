@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import { Loading } from '@/components/Loading';
 
 interface UserBadge {
   _id: string;
@@ -195,7 +196,9 @@ export default function ProfilePage() {
             </CardHeader>
             <CardContent>
               {loading ? (
-                <p>Loading badges... ⏳</p>
+                <div className="flex justify-center py-8">
+                  <Loading />
+                </div>
               ) : badges.length === 0 ? (
                 <p className="text-muted-foreground text-center py-8">
                   No badges earned yet. Keep solving problems! 💪

@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Loading } from '@/components/Loading';
 
 // Dynamically import Monaco Editor to avoid SSR issues
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), {
@@ -122,14 +123,7 @@ export default function ProblemPage() {
   }
 
   if (loading) {
-    return (
-      <div className="min-h-screen">
-        <Navbar />
-        <div className="container mx-auto px-4 py-12 text-center">
-          <p className="text-lg">Loading problem... ⏳</p>
-        </div>
-      </div>
-    );
+    return <Loading />;
   }
 
   if (!problem) {

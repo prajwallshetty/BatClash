@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { useSession } from 'next-auth/react';
 import { motion } from 'framer-motion';
+import { Loading } from '@/components/Loading';
 
 interface LeaderboardEntry {
   rank: number;
