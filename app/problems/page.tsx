@@ -8,11 +8,13 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { motion } from 'framer-motion';
+import { Emoji } from 'react-apple-emojis';
 
 interface Problem {
   _id: string;
   title: string;
   description: string;
+  category: 'Web Dev' | 'DSA';
   difficulty: 'Easy' | 'Medium' | 'Hard';
   xpReward: number;
   solvedCount: number;
@@ -21,20 +23,22 @@ interface Problem {
 export default function ProblemsPage() {
   const { data: session } = useSession();
   const [problems, setProblems] = useState<Problem[]>([]);
+  const [category, setCategory] = useState<string>('all');
   const [filter, setFilter] = useState<string>('all');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!session) return;
     fetchProblems();
-  }, [session, filter]);
+  }, [session, filter, category]);
 
   const fetchProblems = async () => {
     try {
       setLoading(true);
-      const url = filter !== 'all' 
-        ? `/api/problems?difficulty=${filter}`
-        : '/api/problems';
+      const params = new URLSearchParams();
+      if (category !== 'all') params.append('category', category);
+      if (filter !== 'all') params.append('difficulty', filter);
+      const url = params.toString() ? `/api/problems?${params.toString()}` : '/api/problems';
       const res = await fetch(url);
       const data = await res.json();
       setProblems(data.problems || []);
@@ -45,29 +49,16 @@ export default function ProblemsPage() {
     }
   };
 
-  const getDifficultyEmoji = (difficulty: string) => {
-    switch (difficulty) {
-      case 'Easy':
-        return '🟢';
-      case 'Medium':
-        return '🟡';
-      case 'Hard':
-        return '🔴';
-      default:
-        return '⚪';
-    }
-  };
-
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'Easy':
-        return 'bg-green-500 hover:bg-green-600';
+        return 'bg-foreground text-background';
       case 'Medium':
-        return 'bg-yellow-500 hover:bg-yellow-600';
+        return 'bg-muted text-foreground';
       case 'Hard':
-        return 'bg-red-500 hover:bg-red-600';
+        return 'bg-foreground text-background';
       default:
-        return 'bg-gray-500';
+        return 'bg-muted';
     }
   };
 
@@ -83,7 +74,7 @@ export default function ProblemsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-background">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
         <motion.div
@@ -92,25 +83,52 @@ export default function ProblemsPage() {
           className="mb-6"
         >
           <h1 className="text-4xl font-bold mb-4 flex items-center gap-2">
-            💻 Coding Problems
+            <Emoji name="laptop" width={32} height={32} />
+            Coding Problems
           </h1>
-          <div className="flex gap-2 flex-wrap">
-            {['all', 'Easy', 'Medium', 'Hard'].map((difficulty) => (
-              <Button
-                key={difficulty}
-                variant={filter === difficulty ? 'default' : 'outline'}
-                onClick={() => setFilter(difficulty)}
-                className="transition-all"
-              >
-                {difficulty === 'all' ? '📋 All' : `${getDifficultyEmoji(difficulty)} ${difficulty}`}
-              </Button>
-            ))}
+          <div className="space-y-4">
+            <div className="flex gap-2 flex-wrap">
+              <span className="text-sm font-semibold text-muted-foreground self-center">Category:</span>
+              {['all', 'Web Dev', 'DSA'].map((cat) => (
+                <Button
+                  key={cat}
+                  variant={category === cat ? 'default' : 'outline'}
+                  onClick={() => setCategory(cat)}
+                  className={category === cat ? 'bg-foreground text-background hover:opacity-90' : ''}
+                >
+                  {cat === 'all' ? 'All' : cat === 'Web Dev' ? (
+                    <>
+                      <Emoji name="globe-showing-americas" width={16} height={16} className="mr-2" />
+                      Web Dev
+                    </>
+                  ) : (
+                    <>
+                      <Emoji name="bar-chart" width={16} height={16} className="mr-2" />
+                      DSA
+                    </>
+                  )}
+                </Button>
+              ))}
+            </div>
+            <div className="flex gap-2 flex-wrap">
+              <span className="text-sm font-semibold text-muted-foreground self-center">Difficulty:</span>
+              {['all', 'Easy', 'Medium', 'Hard'].map((difficulty) => (
+                <Button
+                  key={difficulty}
+                  variant={filter === difficulty ? 'default' : 'outline'}
+                  onClick={() => setFilter(difficulty)}
+                  className={filter === difficulty ? 'bg-foreground text-background hover:opacity-90' : ''}
+                >
+                  {difficulty === 'all' ? 'All' : difficulty}
+                </Button>
+              ))}
+            </div>
           </div>
         </motion.div>
 
         {loading ? (
           <div className="text-center py-12">
-            <p className="text-lg">Loading problems... ⏳</p>
+            <p className="text-lg">Loading problems...</p>
           </div>
         ) : (
           <motion.div
@@ -128,10 +146,10 @@ export default function ProblemsPage() {
             className="grid gap-4"
           >
             {problems.length === 0 ? (
-              <Card>
+              <Card className="border border-border">
                 <CardContent className="py-12 text-center">
                   <p className="text-lg text-muted-foreground">
-                    No problems found. Check back later! 📝
+                    No problems found. Check back later!
                   </p>
                 </CardContent>
               </Card>
@@ -143,29 +161,37 @@ export default function ProblemsPage() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Card className="hover:shadow-lg transition-all duration-300 hover:border-blue-300">
+                  <Card className="hover:shadow-lg transition-all duration-300 border border-border">
                     <CardHeader>
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-xl">{problem.title}</CardTitle>
                         <div className="flex items-center gap-2">
-                          <Badge
-                            className={`${getDifficultyColor(problem.difficulty)} text-white`}
-                          >
-                            {getDifficultyEmoji(problem.difficulty)} {problem.difficulty}
+                          <Badge variant="outline" className="text-xs">
+                            {problem.category === 'Web Dev' ? (
+                              <><Emoji name="globe-showing-americas" width={12} height={12} className="mr-1" /> Web Dev</>
+                            ) : (
+                              <><Emoji name="bar-chart" width={12} height={12} className="mr-1" /> DSA</>
+                            )}
                           </Badge>
-                          <span className="text-sm font-semibold text-blue-600">
-                            ⭐ {problem.xpReward} XP
+                          <Badge
+                            className={getDifficultyColor(problem.difficulty)}
+                          >
+                            {problem.difficulty}
+                          </Badge>
+                          <span className="text-sm font-semibold">
+                            {problem.xpReward} XP
                           </span>
                         </div>
                       </div>
                       <CardDescription className="flex items-center gap-2">
-                        <span>✅ {problem.solvedCount} solved</span>
+                        <Emoji name="white-check-mark" width={16} height={16} />
+                        <span>{problem.solvedCount} solved</span>
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
                       <Link href={`/problems/${problem._id}`}>
-                        <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                          Solve Problem 🚀
+                        <Button className="w-full bg-foreground text-background hover:opacity-90">
+                          Solve Problem
                         </Button>
                       </Link>
                     </CardContent>

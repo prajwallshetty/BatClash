@@ -5,6 +5,7 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
+import { Emoji } from 'react-apple-emojis';
 
 export function Navbar() {
   const { data: session } = useSession();
@@ -12,68 +13,67 @@ export function Navbar() {
   const getRankEmoji = (rank: string) => {
     switch (rank) {
       case 'Diamond':
-        return '💎';
+        return <Emoji name="sparkles" width={16} height={16} />;
       case 'Gold':
-        return '🥇';
+        return <Emoji name="1st-place-medal" width={16} height={16} />;
       case 'Silver':
-        return '🥈';
+        return <Emoji name="2nd-place-medal" width={16} height={16} />;
       case 'Bronze':
-        return '🥉';
+        return <Emoji name="3rd-place-medal" width={16} height={16} />;
       default:
-        return '⭐';
+        return <Emoji name="star" width={16} height={16} />;
     }
   };
 
   return (
-    <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+    <nav className="border-b border-border bg-background sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-bold hover:scale-105 transition-transform">
-          <motion.span
-            whileHover={{ scale: 1.1 }}
-            className="inline-block"
-          >
-            🦇 Batman
-          </motion.span>
+        <Link href="/" className="text-2xl font-bold hover:opacity-70 transition-opacity flex items-center gap-2">
+          <Emoji name="bat" width={24} height={24} />
+          <span>Batclash</span>
         </Link>
         
         <div className="flex items-center gap-4">
           {session ? (
             <>
               <Link href="/problems">
-                <Button variant="ghost" className="hover:bg-blue-50">
-                  💻 Problems
+                <Button variant="ghost" className="hover:bg-accent">
+                  <Emoji name="laptop" width={16} height={16} className="mr-2" />
+                  Problems
                 </Button>
               </Link>
               <Link href="/leaderboard">
-                <Button variant="ghost" className="hover:bg-purple-50">
-                  📊 Leaderboard
+                <Button variant="ghost" className="hover:bg-accent">
+                  <Emoji name="bar-chart" width={16} height={16} className="mr-2" />
+                  Leaderboard
                 </Button>
               </Link>
               <Link href="/profile">
-                <Button variant="ghost" className="hover:bg-pink-50">
-                  👤 Profile
+                <Button variant="ghost" className="hover:bg-accent">
+                  <Emoji name="bust-in-silhouette" width={16} height={16} className="mr-2" />
+                  Profile
                 </Button>
               </Link>
-              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-blue-50 to-purple-50">
+              <div className="flex items-center gap-2 px-3 py-1 rounded border border-border bg-muted">
                 <Badge variant="secondary" className="flex items-center gap-1">
                   {getRankEmoji(session.user.rank)} {session.user.rank}
                 </Badge>
-                <span className="text-sm font-semibold text-blue-600">
+                <span className="text-sm font-semibold">
                   {session.user.xp} XP
                 </span>
                 {session.user.streak > 0 && (
-                  <span className="text-sm font-semibold text-orange-600 flex items-center gap-1">
-                    🔥 {session.user.streak}
+                  <span className="text-sm font-semibold flex items-center gap-1">
+                    <Emoji name="fire" width={16} height={16} /> {session.user.streak}
                   </span>
                 )}
               </div>
-              <Button onClick={() => signOut()} variant="outline" className="hover:bg-red-50">
+              <Button onClick={() => signOut()} variant="outline">
                 Sign Out
               </Button>
             </>
           ) : (
-            <Button onClick={() => signIn()} className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-              Sign In 🚀
+            <Button onClick={() => signIn()} className="bg-foreground text-background hover:opacity-90">
+              Sign In
             </Button>
           )}
         </div>

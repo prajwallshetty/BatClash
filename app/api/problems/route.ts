@@ -11,8 +11,12 @@ export async function GET(request: NextRequest) {
 
     const searchParams = request.nextUrl.searchParams;
     const difficulty = searchParams.get('difficulty');
+    const category = searchParams.get('category');
 
-    const query = difficulty ? { difficulty } : {};
+    const query: any = {};
+    if (difficulty) query.difficulty = difficulty;
+    if (category) query.category = category;
+
     const problems = await Problem.find(query)
       .select('-testCases -starterCode')
       .sort({ createdAt: -1 });

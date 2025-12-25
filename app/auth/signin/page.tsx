@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { motion } from 'framer-motion';
+import { Emoji } from 'react-apple-emojis';
 
 export default function SignInPage() {
   const router = useRouter();
@@ -79,22 +80,24 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="w-full max-w-md"
       >
-        <Card className="shadow-xl border-0">
+        <Card className="shadow-xl border border-border">
           <CardHeader className="text-center space-y-2">
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: 'spring' }}
+              className="flex items-center justify-center gap-2"
             >
-              <CardTitle className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                🦇 Batman
+              <Emoji name="bat" width={40} height={40} />
+              <CardTitle className="text-4xl font-bold">
+                Batclash
               </CardTitle>
             </motion.div>
             <CardDescription className="text-base">
@@ -135,14 +138,14 @@ export default function SignInPage() {
                   {error && (
                     <p className="text-sm text-destructive">{error}</p>
                   )}
-                  <Button type="submit" className="w-full" disabled={loading}>
+                  <Button type="submit" className="w-full bg-foreground text-background hover:opacity-90" disabled={loading}>
                     {loading ? 'Signing in...' : 'Sign In'}
                   </Button>
                 </form>
 
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t" />
+                    <span className="w-full border-t border-border" />
                   </div>
                   <div className="relative flex justify-center text-xs uppercase">
                     <span className="bg-card px-2 text-muted-foreground">
@@ -154,9 +157,8 @@ export default function SignInPage() {
                 <Button
                   onClick={() => signIn('google')}
                   variant="outline"
-                  className="w-full"
+                  className="w-full border-border"
                 >
-                  <span className="mr-2">🔵</span>
                   Sign in with Google
                 </Button>
               </TabsContent>
@@ -203,7 +205,7 @@ export default function SignInPage() {
                   {error && (
                     <p className="text-sm text-destructive">{error}</p>
                   )}
-                  <Button type="submit" className="w-full" disabled={loading}>
+                  <Button type="submit" className="w-full bg-foreground text-background hover:opacity-90" disabled={loading}>
                     {loading ? 'Creating account...' : 'Create Account'}
                   </Button>
                 </form>

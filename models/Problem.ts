@@ -9,6 +9,7 @@ export interface ITestCase {
 export interface IProblem extends Document {
   title: string;
   description: string;
+  category: 'Web Dev' | 'DSA';
   difficulty: 'Easy' | 'Medium' | 'Hard';
   starterCode: string;
   testCases: ITestCase[];
@@ -41,6 +42,11 @@ const ProblemSchema: Schema = new Schema(
     },
     description: {
       type: String,
+      required: true,
+    },
+    category: {
+      type: String,
+      enum: ['Web Dev', 'DSA'],
       required: true,
     },
     difficulty: {
@@ -77,6 +83,7 @@ const ProblemSchema: Schema = new Schema(
 );
 
 // Indexes
+ProblemSchema.index({ category: 1 });
 ProblemSchema.index({ difficulty: 1 });
 ProblemSchema.index({ createdAt: -1 });
 

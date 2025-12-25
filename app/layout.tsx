@@ -6,7 +6,7 @@ import { Providers } from "./providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Batman - Solo Coding Platform",
+  title: "Batclash - Solo Coding Platform",
   description: "A LeetCode-like solo coding platform",
 };
 
