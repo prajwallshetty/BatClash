@@ -18,10 +18,15 @@ const MonacoEditor = dynamic(() => import('@monaco-editor/react'), {
 
 interface Problem {
   _id: string;
+  slug?: string;
   title: string;
   description: string;
+  category?: 'Web Dev' | 'DSA';
+  topic?: string;
   difficulty: 'Easy' | 'Medium' | 'Hard';
   starterCode: string;
+  testCases?: any[]; // For backward compatibility (visible test cases)
+  visibleTestCases?: any[];
   xpReward: number;
 }
 

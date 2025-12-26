@@ -11,6 +11,7 @@ export interface IUser extends Document {
   lastSolvedDate?: Date;
   solvedCount: number;
   rank: 'Bronze' | 'Silver' | 'Gold' | 'Diamond';
+  banned: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -62,6 +63,11 @@ const UserSchema: Schema = new Schema(
       type: String,
       enum: ['Bronze', 'Silver', 'Gold', 'Diamond'],
       default: 'Bronze',
+    },
+    banned: {
+      type: Boolean,
+      default: false,
+      index: true,
     },
   },
   {

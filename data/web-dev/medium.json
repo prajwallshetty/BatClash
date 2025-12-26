@@ -1,0 +1,67 @@
+[
+  {
+    "slug": "deep-clone-object",
+    "title": "Deep Clone Object",
+    "category": "Web Dev",
+    "topic": "Object Manipulation",
+    "difficulty": "Medium",
+    "description": "<p>Implement a function that creates a deep clone of a JavaScript object. The function should handle nested objects, arrays, and primitive values.</p><p><strong>Example:</strong></p><pre>Input: obj = { a: 1, b: { c: 2, d: [3, 4] } }\nOutput: { a: 1, b: { c: 2, d: [3, 4] } }\n// The output should be a completely independent copy</pre><p><strong>Function signature:</strong></p><pre>function solution(obj) {\n  // Your code here\n  return {};\n}</pre>",
+    "starterCode": "function solution(obj) {\n  // Write your code here\n  return {};\n}",
+    "visibleTestCases": [
+      {
+        "input": { "obj": { "a": 1, "b": { "c": 2 } } },
+        "expectedOutput": { "a": 1, "b": { "c": 2 } },
+        "description": "Nested object clone"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": { "obj": [1, [2, 3], { "a": 4 }] },
+        "expectedOutput": [1, [2, 3], { "a": 4 }]
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "slug": "array-reduce-implementation",
+    "title": "Array Methods: Reduce",
+    "category": "Web Dev",
+    "topic": "Array Methods",
+    "difficulty": "Medium",
+    "description": "<p>Implement your own version of the Array.reduce() method without using the built-in reduce function.</p><p><strong>Example:</strong></p><pre>const arr = [1, 2, 3, 4];\nconst result = solution(arr, (acc, x) => acc + x, 0);\n// result should be 10</pre><p><strong>Function signature:</strong></p><pre>function solution(arr, callbackStr, initialValue) {\n  // Your code here\n  return 0;\n}</pre>",
+    "starterCode": "function solution(arr, callbackStr, initialValue) {\n  // Write your code here\n  const callback = eval(callbackStr);\n  return 0;\n}",
+    "visibleTestCases": [
+      {
+        "input": { "arr": [1, 2, 3, 4], "callbackStr": "(acc, x) => acc + x", "initialValue": 0 },
+        "expectedOutput": 10,
+        "description": "Sum all elements"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": { "arr": [1, 2, 3], "callbackStr": "(acc, x) => acc * x", "initialValue": 1 },
+        "expectedOutput": 6
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "slug": "url-parser",
+    "title": "URL Parser",
+    "category": "Web Dev",
+    "topic": "String Manipulation",
+    "difficulty": "Medium",
+    "description": "<p>Implement a function that parses a URL string and returns an object with the parsed components (protocol, host, path, query parameters, etc.).</p><p><strong>Example:</strong></p><pre>Input: url = \"https://example.com/path?name=John&age=30\"\nOutput: {\n  protocol: \"https\",\n  host: \"example.com\",\n  path: \"/path\",\n  query: { name: \"John\", age: \"30\" }\n}</pre><p><strong>Function signature:</strong></p><pre>function solution(url) {\n  // Your code here\n  return {};\n}</pre>",
+    "starterCode": "function solution(url) {\n  // Write your code here\n  return {};\n}",
+    "visibleTestCases": [
+      {
+        "input": { "url": "https://example.com/path?name=John&age=30" },
+        "expectedOutput": { "protocol": "https", "host": "example.com", "path": "/path", "query": { "name": "John", "age": "30" } },
+        "description": "Full URL parsing"
+      }
+    ],
+    "hiddenTestCases": [],
+    "xpReward": 100
+  }
+]
+

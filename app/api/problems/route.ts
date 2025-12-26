@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
     if (category) query.category = category;
 
     const problems = await Problem.find(query)
-      .select('-testCases -starterCode')
+      .select('-visibleTestCases -hiddenTestCases -starterCode')
       .sort({ createdAt: -1 });
 
     return NextResponse.json({ problems });

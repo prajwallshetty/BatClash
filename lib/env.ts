@@ -33,5 +33,8 @@ export const env = {
   // Google OAuth
   GOOGLE_CLIENT_ID: getEnvVar('GOOGLE_CLIENT_ID'),
   GOOGLE_CLIENT_SECRET: getEnvVar('GOOGLE_CLIENT_SECRET'),
+  
+  // Admin
+  ADMIN_EMAIL: getEnvVar('ADMIN_EMAIL'),
 } as const;
 

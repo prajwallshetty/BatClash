@@ -1,0 +1,67 @@
+[
+  {
+    "slug": "pipe-function",
+    "title": "Pipe Function",
+    "category": "Web Dev",
+    "topic": "Functions",
+    "difficulty": "Hard",
+    "description": "<p>Implement a pipe function that chains multiple functions together, passing the result of one function as the input to the next.</p><p><strong>Example:</strong></p><pre>const addOne = x => x + 1;\nconst multiplyByTwo = x => x * 2;\nconst pipeFn = solution([addOne, multiplyByTwo]);\npipeFn(5); // (5 + 1) * 2 = 12</pre><p><strong>Function signature:</strong></p><pre>function solution(functions) {\n  // Your code here\n  return function(value) {\n    // Implementation\n  };\n}</pre>",
+    "starterCode": "function solution(functions) {\n  // Write your code here\n  return function(value) {\n    // Implementation\n  };\n}",
+    "visibleTestCases": [
+      {
+        "input": { "functions": ["(x) => x + 1", "(x) => x * 2"], "value": 5 },
+        "expectedOutput": 12,
+        "description": "Chain two functions"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": { "functions": ["(x) => x * 2", "(x) => x - 1"], "value": 3 },
+        "expectedOutput": 5
+      }
+    ],
+    "xpReward": 200
+  },
+  {
+    "slug": "json-stringify",
+    "title": "JSON Stringify",
+    "category": "Web Dev",
+    "topic": "Serialization",
+    "difficulty": "Hard",
+    "description": "<p>Implement your own version of JSON.stringify() that converts a JavaScript object to a JSON string.</p><p>Handle objects, arrays, strings, numbers, booleans, null, and undefined.</p><p><strong>Example:</strong></p><pre>Input: obj = { name: \"John\", age: 30, hobbies: [\"reading\", \"coding\"] }\nOutput: '{\"name\":\"John\",\"age\":30,\"hobbies\":[\"reading\",\"coding\"]}'</pre><p><strong>Function signature:</strong></p><pre>function solution(obj) {\n  // Your code here\n  return \"\";\n}</pre>",
+    "starterCode": "function solution(obj) {\n  // Write your code here\n  return \"\";\n}",
+    "visibleTestCases": [
+      {
+        "input": { "obj": { "name": "John", "age": 30 } },
+        "expectedOutput": "{\"name\":\"John\",\"age\":30}",
+        "description": "Basic object stringify"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": { "obj": [1, 2, 3] },
+        "expectedOutput": "[1,2,3]"
+      }
+    ],
+    "xpReward": 200
+  },
+  {
+    "slug": "lru-cache",
+    "title": "LRU Cache",
+    "category": "Web Dev",
+    "topic": "Data Structures",
+    "difficulty": "Hard",
+    "description": "<p>Implement an LRU (Least Recently Used) Cache with get and put operations. The cache should have a maximum capacity and evict the least recently used item when the capacity is exceeded.</p><p><strong>Example:</strong></p><pre>const cache = new LRUCache(2);\ncache.put(1, 1);\ncache.put(2, 2);\ncache.get(1); // returns 1\ncache.put(3, 3); // evicts key 2\ncache.get(2); // returns -1 (not found)</pre><p><strong>Function signature:</strong></p><pre>class LRUCache {\n  constructor(capacity) {\n    // Your code here\n  }\n  \n  get(key) {\n    // Your code here\n    return -1;\n  }\n  \n  put(key, value) {\n    // Your code here\n  }\n}</pre>",
+    "starterCode": "class LRUCache {\n  constructor(capacity) {\n    // Your code here\n  }\n  \n  get(key) {\n    // Your code here\n    return -1;\n  }\n  \n  put(key, value) {\n    // Your code here\n  }\n}",
+    "visibleTestCases": [
+      {
+        "input": { "capacity": 2, "operations": [["put", 1, 1], ["put", 2, 2], ["get", 1], ["put", 3, 3], ["get", 2]] },
+        "expectedOutput": [1, -1],
+        "description": "LRU eviction"
+      }
+    ],
+    "hiddenTestCases": [],
+    "xpReward": 200
+  }
+]
+

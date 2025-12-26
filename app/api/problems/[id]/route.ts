@@ -18,7 +18,14 @@ export async function GET(
       return NextResponse.json({ error: 'Problem not found' }, { status: 404 });
     }
 
-    return NextResponse.json({ problem });
+    // Return problem with visible test cases only (hide hidden test cases from client)
+    const problemResponse = {
+      ...problem.toObject(),
+      testCases: problem.visibleTestCases, // For backward compatibility
+      hiddenTestCases: undefined, // Don't expose hidden test cases
+    };
+
+    return NextResponse.json({ problem: problemResponse });
   } catch (error: any) {
     console.error('Error fetching problem:', error);
     return NextResponse.json(
@@ -27,5 +34,6 @@ export async function GET(
     );
   }
 }
+
 
 

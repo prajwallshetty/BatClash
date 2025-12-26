@@ -39,13 +39,26 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Problem not found' }, { status: 404 });
     }
 
-    // Execute code against all test cases
+    // Combine visible and hidden test cases for evaluation
+    const allTestCases = [
+      ...(problem.visibleTestCases || []),
+      ...(problem.hiddenTestCases || []),
+    ];
+
+    if (allTestCases.length === 0) {
+      return NextResponse.json(
+        { error: 'Problem has no test cases' },
+        { status: 400 }
+      );
+    }
+
+    // Execute code against all test cases (visible + hidden)
     let passedTests = 0;
     let totalExecutionTime = 0;
     let errorMessage: string | undefined;
     let status: 'Accepted' | 'Wrong Answer' | 'Runtime Error' | 'Time Limit Exceeded' = 'Accepted';
 
-    for (const testCase of problem.testCases) {
+    for (const testCase of allTestCases) {
       const result = await executeCode(code, testCase, 5000);
       totalExecutionTime += result.executionTime;
 
@@ -64,7 +77,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const isAccepted = status === 'Accepted' && passedTests === problem.testCases.length;
+    const isAccepted = status === 'Accepted' && passedTests === allTestCases.length;
 
     // Save submission
     const submission = await Submission.create({
@@ -75,7 +88,7 @@ export async function POST(request: NextRequest) {
       executionTime: totalExecutionTime,
       errorMessage,
       passedTests,
-      totalTests: problem.testCases.length,
+      totalTests: allTestCases.length,
     });
 
     // Update user stats if accepted

@@ -7,12 +7,15 @@ export interface ITestCase {
 }
 
 export interface IProblem extends Document {
+  slug: string;
   title: string;
   description: string;
   category: 'Web Dev' | 'DSA';
+  topic: string;
   difficulty: 'Easy' | 'Medium' | 'Hard';
   starterCode: string;
-  testCases: ITestCase[];
+  visibleTestCases: ITestCase[];
+  hiddenTestCases: ITestCase[];
   xpReward: number;
   solvedCount: number;
   createdAt: Date;
@@ -35,6 +38,13 @@ const TestCaseSchema: Schema = new Schema({
 
 const ProblemSchema: Schema = new Schema(
   {
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+    },
     title: {
       type: String,
       required: true,
@@ -48,22 +58,38 @@ const ProblemSchema: Schema = new Schema(
       type: String,
       enum: ['Web Dev', 'DSA'],
       required: true,
+      index: true,
+    },
+    topic: {
+      type: String,
+      required: true,
+      trim: true,
     },
     difficulty: {
       type: String,
       enum: ['Easy', 'Medium', 'Hard'],
       required: true,
+      index: true,
     },
     starterCode: {
       type: String,
       required: true,
     },
-    testCases: {
+    visibleTestCases: {
       type: [TestCaseSchema],
       required: true,
       validate: {
         validator: (v: ITestCase[]) => v.length > 0,
-        message: 'At least one test case is required',
+        message: 'At least one visible test case is required',
+      },
+    },
+    hiddenTestCases: {
+      type: [TestCaseSchema],
+      required: true,
+      default: [],
+      validate: {
+        validator: (v: ITestCase[]) => v.length >= 0,
+        message: 'Hidden test cases must be an array',
       },
     },
     xpReward: {
@@ -82,9 +108,11 @@ const ProblemSchema: Schema = new Schema(
   }
 );
 
-// Indexes
-ProblemSchema.index({ category: 1 });
-ProblemSchema.index({ difficulty: 1 });
+// Indexes for efficient querying and pagination
+// Note: slug uniqueness is already enforced by unique: true in schema definition
+ProblemSchema.index({ category: 1, difficulty: 1 });
+ProblemSchema.index({ category: 1, difficulty: 1, createdAt: -1 });
+ProblemSchema.index({ difficulty: 1, createdAt: -1 });
 ProblemSchema.index({ createdAt: -1 });
 
 const Problem: Model<IProblem> = mongoose.models.Problem || mongoose.model<IProblem>('Problem', ProblemSchema);

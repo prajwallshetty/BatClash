@@ -85,3 +85,4 @@ curl -X POST http://localhost:3000/api/weekly-reset
 5. Set up a weekly cron job for XP reset
 
 
+

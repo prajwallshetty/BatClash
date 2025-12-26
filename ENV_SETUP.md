@@ -77,3 +77,4 @@ Or use an online generator: https://generate-secret.vercel.app/32
 - Use Next.js environment variable prefixes for client-side: `NEXT_PUBLIC_*`
 
 
+

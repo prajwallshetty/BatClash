@@ -1,0 +1,49 @@
+[
+  {
+    "slug": "trapping-rain-water",
+    "title": "Trapping Rain Water",
+    "category": "DSA",
+    "topic": "Two Pointers",
+    "difficulty": "Hard",
+    "description": "<p>Given <code>n</code> non-negative integers representing an elevation map where the width of each bar is <code>1</code>, compute how much water it can trap after raining.</p><p><strong>Example:</strong></p><pre>Input: height = [0,1,0,2,1,0,1,3,2,1,2,1]\nOutput: 6</pre><p><strong>Function signature:</strong></p><pre>function solution(height) {\n  // Your code here\n}</pre>",
+    "starterCode": "function solution(height) {\n  // Write your code here\n  return 0;\n}",
+    "visibleTestCases": [
+      {
+        "input": { "height": [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1] },
+        "expectedOutput": 6,
+        "description": "Complex elevation map"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": { "height": [4, 2, 0, 3, 2, 5] },
+        "expectedOutput": 9
+      }
+    ],
+    "xpReward": 200
+  },
+  {
+    "slug": "longest-consecutive-sequence",
+    "title": "Longest Consecutive Sequence",
+    "category": "DSA",
+    "topic": "Hash Set",
+    "difficulty": "Hard",
+    "description": "<p>Given an unsorted array of integers <code>nums</code>, return the length of the longest consecutive elements sequence.</p><p>You must write an algorithm that runs in O(n) time.</p><p><strong>Example:</strong></p><pre>Input: nums = [100,4,200,1,3,2]\nOutput: 4\nExplanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefore its length is 4.</pre><p><strong>Function signature:</strong></p><pre>function solution(nums) {\n  // Your code here\n}</pre>",
+    "starterCode": "function solution(nums) {\n  // Write your code here\n  return 0;\n}",
+    "visibleTestCases": [
+      {
+        "input": { "nums": [100, 4, 200, 1, 3, 2] },
+        "expectedOutput": 4,
+        "description": "O(n) solution required"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": { "nums": [0, 3, 7, 2, 5, 8, 4, 6, 0, 1] },
+        "expectedOutput": 9
+      }
+    ],
+    "xpReward": 200
+  }
+]
+
